@@ -15,7 +15,7 @@ export default function Scoreboard({
   homeTeam,
   awayTeam,
 }) {
-  const [displayHomeBoxscore, setDisplayHomeBoxscore] = useState(true);
+  const [displayHome, setDisplayHome] = useState(true);
 
   if (gameStatus === 1) {
     /*
@@ -50,22 +50,12 @@ export default function Scoreboard({
       />
 
       <PlayerStats
-        players={displayHomeBoxscore ? homeTeam.players : awayTeam.players}
+        players={displayHome ? homeTeam.players : awayTeam.players}
+        displayHome={displayHome}
+        setDisplayHome={setDisplayHome}
+        homeTeamName={homeTeam.teamTricode}
+        awayTeamName={awayTeam.teamTricode}
       />
-
-      <button
-        className={`bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded`}
-        onClick={() => setDisplayHomeBoxscore((pre) => !pre)}
-      >
-        <Image
-          src={`/logos/${displayHomeBoxscore ? homeTeam.teamTricode : awayTeam.teamTricode
-            }.png`}
-          alt="/"
-          width={20}
-          height={20}
-          className="m-auto w-auto h-auto "
-        ></Image>
-      </button>
     </div>
   );
 }

@@ -1,9 +1,31 @@
 import Image from "next/image";
 
-export default function PlayerStats({ players }) {
+export default function PlayerStats({
+  players,
+  displayHome,
+  setDisplayHome,
+  homeTeamName,
+  awayTeamName,
+}) {
   return (
     <>
-      <div className="flex flex-col text-center mt-2">
+      <div className="flex justify-center mt-2">
+        <button
+          className={`${displayHome ? `${homeTeamName}-color text-white` : ""
+            } text-gray-800 font-bold py-2 px-8 rounded hover:scale-110 transition duration-200 ease-in-out`}
+          onClick={() => setDisplayHome(true)}
+        >
+          {homeTeamName}
+        </button>
+        <button
+          className={`${!displayHome ? `${awayTeamName}-color text-white` : ""
+            } text-gray-800 font-bold py-2 px-8 rounded hover:scale-110 transition duration-200 ease-in-out`}
+          onClick={() => setDisplayHome(false)}
+        >
+          {awayTeamName}
+        </button>
+      </div>
+      <div className="flex flex-col text-center">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-hidden">
@@ -71,13 +93,21 @@ export default function PlayerStats({ players }) {
                       </td>
                       <td>
                         <span>
-                          {player.statistics.fieldGoalsPercentage.toFixed(2)}
+                          {`${player.statistics.fieldGoalsMade}/${player.statistics.fieldGoalsAttempted}`}
                         </span>
+                        {/* <span> */}
+                        {/*   {( */}
+                        {/*     player.statistics.fieldGoalsPercentage * 100 */}
+                        {/*   ).toFixed(2)} */}
+                        {/* </span> */}
                       </td>
                       <td>
                         <span>
-                          {player.statistics.freeThrowsPercentage.toFixed(2)}
+                          {`${player.statistics.freeThrowsMade}/${player.statistics.freeThrowsAttempted}`}
                         </span>
+                        {/* <span> */}
+                        {/*   {player.statistics.freeThrowsPercentage.toFixed(2)} */}
+                        {/* </span> */}
                       </td>
                       <td>
                         <span>{player.statistics.threePointersMade}</span>
