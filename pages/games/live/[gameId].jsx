@@ -4,28 +4,24 @@ import useBoxscore from "../../../hooks/useBoxscore";
 
 // component
 import Scoreboard from "../../../components/Scoreboard/Scoreboard";
+import Loading from "../../../components/Loading/Loading";
 
 export default function() {
   const router = useRouter();
   const { gameId } = router.query;
 
-  // const { data, error, isLoading } = useLiveData(gameId);
-  const { data, error, isLoading } = useBoxscore(gameId);
+  const { data, isLoading } = useBoxscore(gameId, {});
 
   if (isLoading) {
-    return <p>LOADING.........</p>;
+    return <Loading />;
   }
 
-  // console.log(data, "live/");
-  if (error) {
-    return <p>{error}</p>;
+  // handling error response
+  if (data.status) {
+    return <Loading />;
   }
 
-  return (
-    <div className="">
-      <Scoreboard {...data.game} />
-    </div>
-  );
+  return <Scoreboard {...data.game} />;
 }
 
 // export async function getServerSideProps(context) {

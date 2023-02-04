@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import useBoxscore from "../../hooks/useBoxscore";
 
 // component
 import Scoreboard from "../../components/Scoreboard/Scoreboard";
