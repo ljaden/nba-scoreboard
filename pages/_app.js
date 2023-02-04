@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { Source_Code_Pro } from "@next/font/google";
+import { Roboto, Roboto_Mono } from "@next/font/google";
 
 import useLiveData from "../hooks/useLiveData";
 import useSchedule from "../hooks/useSchedule";
@@ -11,7 +11,7 @@ import { DateProvider } from "../context/dateContext";
 import Navbar from "../components/Navbar/Navbar";
 
 // variable font
-const source = Source_Code_Pro({ subsets: ["latin"] });
+const source = Roboto_Mono({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }) {
   return (

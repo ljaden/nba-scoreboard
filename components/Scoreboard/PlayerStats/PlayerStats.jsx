@@ -58,13 +58,13 @@ export default function PlayerStats({ players }) {
                         )}
                       </td>
                       <td>
-                        <Image
-                          src={`https://cdn.nba.com/headshots/nba/latest/260x190/${player.personId}.png`}
-                          alt="headshot"
-                          width={35}
-                          height={35}
-                          className="hidden sm:block w-auto h-auto"
-                        />
+                        {/* <Image */}
+                        {/*   src={`https://cdn.nba.com/headshots/nba/latest/260x190/${player.personId}.png`} */}
+                        {/*   alt="headshot" */}
+                        {/*   width={35} */}
+                        {/*   height={35} */}
+                        {/*   className="hidden sm:block w-auto h-auto" */}
+                        {/* /> */}
                       </td>
                       <td className="whitespace-nowrap text-sm font-medium text-gray-900">
                         <span>{player.name}</span>
