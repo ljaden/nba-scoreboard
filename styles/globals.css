@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  line-height: 1;
+}
+
+body {
+  background-color: rgb(220, 225, 227);
+}
+
+/* Team Colors*/
+
+.ATL-color {
+  background-color: #e13a3e;
+}
+.BOS-color {
+  background-color: #008348;
+}
+.BKN-color {
+  background-color: #000000;
+}
+.CHA-color {
+  background-color: #008ca8;
+}
+.CHI-color {
+  background-color: #cd1f43;
+}
+.CLE-color {
+  background-color: #860038;
+}
+.DAL-color {
+  background-color: #007dc5;
+}
+.DEN-color {
+  background-color: #002d62;
+}
+.DET-color {
+  background-color: #ed174c;
+}
+.GSW-color {
+  background-color: #1d428a;
+}
+.HOU-color {
+  background-color: #ce1141;
+}
+.IND-color {
+  background-color: #fdbb30;
+}
+.LAC-color {
+  background-color: #c8102e;
+}
+.LAL-color {
+  background-color: #552583;
+}
+.MEM-color {
+  background-color: #5d76a9;
+}
+.MIA-color {
+  background-color: #98002e;
+}
+.MIL-color {
+  background-color: #00471b;
+}
+.MIN-color {
+  background-color: #005083;
+}
+.NOP-color {
+  background-color: #002b5c;
+}
+.NYK-color {
+  background-color: #006bb6;
+}
+.OKC-color {
+  background-color: #007dc3;
+}
+.ORL-color {
+  background-color: #0077c0;
+}
+.PHI-color {
+  background-color: #ed174c;
+}
+.PHX-color {
+  background-color: #e56020;
+}
+.POR-color {
+  background-color: #e03a3e;
+}
+.SAC-color {
+  background-color: #5a2f80;
+}
+.SAS-color {
+  background-color: #c4ced4;
+}
+.TOR-color {
+  background-color: #ce1141;
+}
+.UTA-color {
+  background-color: #002b5c;
+}
+.WAS-color {
+  background-color: #002b5c;
+}
