@@ -9,10 +9,7 @@ export async function liveData() {
 
     return data;
   } catch (error) {
-    return {
-      message: "Error",
-      error: error,
-    };
+    return error;
   }
 }
 
@@ -25,10 +22,7 @@ export async function odds() {
 
     return data;
   } catch (error) {
-    return {
-      message: "Error",
-      error: error,
-    };
+    return error;
   }
 }
 
@@ -58,12 +52,10 @@ export async function teams() {
 
     return nbaTeams;
   } catch (error) {
-    return {
-      message: "Error",
-      error: error,
-    };
+    return error;
   }
 }
+
 // * Fetch daily schedule of dateParam
 export async function schedule(dateParam) {
   // * @params
@@ -98,6 +90,6 @@ export async function schedule(dateParam) {
 
     return schedule;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 }
