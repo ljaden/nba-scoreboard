@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import useLiveData from "../../../hooks/useLiveData";
 
@@ -9,7 +9,9 @@ import useLiveData from "../../../hooks/useLiveData";
 import Loading from "../../Loading/Loading";
 
 export default function Live() {
-  const { data, error, isLoading } = useLiveData();
+  const { data, error, isLoading } = useLiveData(null, {
+    refreshInterval: 5000,
+  });
 
   if (isLoading) {
     return <Loading isLoading={isLoading} />;
@@ -41,7 +43,9 @@ export default function Live() {
                     ></Image>
                     <span className="grow">{game.homeTeam.teamTricode}</span>
                   </div>
-                  <span className="flex-none ml-16">{game.homeTeam.score}</span>
+                  <span className={`flex-none ml-16`}>
+                    {game.homeTeam.score}
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between">

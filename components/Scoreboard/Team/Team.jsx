@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { useEffect, useState } from "react";
+
 export default function Team({
   teamId,
   teamName,
@@ -8,10 +10,24 @@ export default function Team({
   wins,
   losses,
   score,
-  periods,
   isHome,
 }) {
-  // console.log(periods);
+  // state score color transition
+  const [color, setColor] = useState("text-white");
+
+  useEffect(() => {
+    setColor("text-lime-400");
+
+    console.log(`${score} ${teamTricode} ${color}`);
+    //
+    const timeoutID = setTimeout(() => {
+      setColor("white");
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeoutID);
+    };
+  }, [score]);
 
   return (
     <div
@@ -43,7 +59,11 @@ export default function Team({
         </div>
       </div>
       <div>
-        <span className="text-4xl">{score}</span>
+        <span
+          className={`text-4xl transition-colors duration-700 ease-in-out transform ${color}`}
+        >
+          {score}
+        </span>
       </div>
     </div>
   );

@@ -2,16 +2,19 @@ import { useRouter } from "next/router";
 
 // component
 import Scoreboard from "../../components/Scoreboard/Scoreboard";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
 
 export default function({ data, error }) {
   const router = useRouter();
 
   if (router.isFallback) {
-    return <div>LOADING...</div>;
+    return <Loading />;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    console.log(error);
+    return <Error message={error} />;
   }
 
   // console.log(data, "info");
@@ -55,7 +58,7 @@ export async function getStaticProps(context) {
     return { props: { data } };
   } catch (error) {
     return {
-      props: { error: `There is no data for data on gameId_${gameId}` },
+      props: { error: `No data found for gameID_${gameId}` },
     };
   }
 }

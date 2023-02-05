@@ -1,15 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useState, useEffect } from "react";
-
 import useSchedule from "../../../hooks/useSchedule";
+
+// components
+import Loading from "../../Loading/Loading";
 
 export default function Scheduled({ date }) {
   const { data, error, isLoading } = useSchedule(date);
 
-  // console.log(data, "Scheduled");
-  if (isLoading) return <p>LOADING...</p>;
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="pt-8">

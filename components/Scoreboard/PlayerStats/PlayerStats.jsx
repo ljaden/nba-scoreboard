@@ -11,15 +11,15 @@ export default function PlayerStats({
     <>
       <div className="flex justify-center mt-2">
         <button
-          className={`${displayHome ? `${homeTeamName}-color text-white` : ""
-            } text-gray-800 font-bold py-2 px-8 rounded hover:scale-110 transition duration-200 ease-in-out`}
+          className={`${displayHome ? `${homeTeamName}-color text-white` : "text-gray-800"
+            } font-bold py-2 px-8 rounded hover:scale-110 transition duration-200 ease-in-out`}
           onClick={() => setDisplayHome(true)}
         >
           {homeTeamName}
         </button>
         <button
-          className={`${!displayHome ? `${awayTeamName}-color text-white` : ""
-            } text-gray-800 font-bold py-2 px-8 rounded hover:scale-110 transition duration-200 ease-in-out`}
+          className={`${!displayHome ? `${awayTeamName}-color text-white` : "text-gray-800"
+            }  font-bold py-2 px-8 rounded hover:scale-110 transition duration-200 ease-in-out`}
           onClick={() => setDisplayHome(false)}
         >
           {awayTeamName}
@@ -114,7 +114,7 @@ export default function PlayerStats({
                         </td>
                       </tr>
                     ))}
-                </tbody>{" "}
+                </tbody>
               </table>
             </div>
           </div>
@@ -126,7 +126,9 @@ export default function PlayerStats({
           .filter((player) => player.status === "INACTIVE")
           .map((player) => player.nameI)
           .map((name) => (
-            <small className="text-gray-400">{name}, </small>
+            <small key={name} className="text-gray-400">
+              {name},{" "}
+            </small>
           ))}
       </div>
     </>
