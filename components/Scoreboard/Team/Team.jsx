@@ -16,10 +16,8 @@ export default function Team({
   const [color, setColor] = useState("text-white");
 
   useEffect(() => {
-    setColor("text-lime-400");
+    setColor("text-lime-400 text-5xl");
 
-    console.log(`${score} ${teamTricode} ${color}`);
-    //
     const timeoutID = setTimeout(() => {
       setColor("white");
     }, 3000);

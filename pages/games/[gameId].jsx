@@ -5,7 +5,7 @@ import Scoreboard from "../../components/Scoreboard/Scoreboard";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
 
-export default function({ data, error }) {
+export default function LivePage({ data, error }) {
   const router = useRouter();
 
   if (router.isFallback) {

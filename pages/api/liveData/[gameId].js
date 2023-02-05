@@ -4,7 +4,7 @@ import { liveData } from "../../../helpers/api";
  *  * GET - /api/liveData/:gameId
  **/
 
-export default async function(req, res) {
+export default async function handler(req, res) {
   const { gameId } = req.query;
 
   const data = await liveData();

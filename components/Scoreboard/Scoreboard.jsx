@@ -26,7 +26,7 @@ export default function Scoreboard({
      */
     return (
       <div>
-        <p>GAME HASN"T BEGAN YET"</p>
+        <p>GAME HASNT BEGAN YET</p>
       </div>
     );
   }
