@@ -34,7 +34,7 @@ export default function Team({
     >
       <div
         className={`flex ${isHome ? "" : "sm:flex-row-reverse"
-          } gap-2 items-center`}
+          } gap-4 items-center`}
       >
         <span className="w-max">
           <Image
@@ -44,7 +44,7 @@ export default function Team({
             height={50}
           ></Image>
         </span>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           {wins ? (
             <small>
               {wins}-{losses}

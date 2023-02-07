@@ -19,30 +19,32 @@ export default function Navbar() {
   // console.log(currentDateFormatted === dateFormatted, "boo");
 
   return (
-    <div className="drop-shadow-lg">
-      <div className="flex justify-between items-center border-b border-gray-300 py-4">
-        <AiOutlineCaretLeft
-          onClick={() => dispatch({ type: "previous_date" })}
-          className="cursor-pointer"
-        />
-        <div className="">
-          {date}
-          {dateFormatted === currentDateFormatted ? (
-            <small className="text-slate-400">(Today)</small>
-          ) : (
-            ""
-          )}
+    <div className="w-full min-w-[30%] sm:w-[30%] sm:h-screen bg-[#ecf0f3] p-4 ease-in duration-500  sm:overflow-y-scroll scroll-pr-4">
+      <div className="drop-shadow-lg">
+        <div className="flex justify-between items-center border-b border-gray-300 py-4">
+          <AiOutlineCaretLeft
+            onClick={() => dispatch({ type: "previous_date" })}
+            className="cursor-pointer"
+          />
+          <div className="">
+            {date}
+            {dateFormatted === currentDateFormatted ? (
+              <small className="text-slate-400">(Today)</small>
+            ) : (
+              ""
+            )}
+          </div>
+          <AiOutlineCaretRight
+            onClick={() => dispatch({ type: "next_date" })}
+            className="cursor-pointer"
+          />
         </div>
-        <AiOutlineCaretRight
-          onClick={() => dispatch({ type: "next_date" })}
-          className="cursor-pointer"
-        />
+        {dateFormatted === currentDateFormatted ? (
+          <Live />
+        ) : (
+          <Scheduled date={dateFormatted} />
+        )}
       </div>
-      {dateFormatted === currentDateFormatted ? (
-        <Live />
-      ) : (
-        <Scheduled date={dateFormatted} />
-      )}
     </div>
   );
 }

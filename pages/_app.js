@@ -1,26 +1,26 @@
 import "../styles/globals.css";
-import { Roboto_Mono } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 
 // context
 import { DateProvider } from "../context/dateContext";
 
-// components
-import Navbar from "../components/Navbar/Navbar";
+import Layout from "../components/Layout/Layout";
 
 // font
-const source = Roboto_Mono({ subsets: ["latin"] });
+const source = Montserrat({
+  weight: ["400", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-mon",
+});
 
 export default function App({ Component, pageProps }) {
   return (
     <DateProvider>
-      <main className={`${source.className} flex flex-col sm:flex-row`}>
-        <div className="w-full min-w-[30%] sm:w-[30%] sm:h-screen bg-[#ecf0f3] p-4 ease-in duration-500  sm:overflow-y-scroll scroll-pr-4">
-          <Navbar />
-        </div>
-        <div className="w-full sm:w-[70%] p-4">
+      <div className={`${source.variable} font-sans`}>
+        <Layout>
           <Component {...pageProps} />
-        </div>
-      </main>
+        </Layout>
+      </div>
     </DateProvider>
   );
 }
