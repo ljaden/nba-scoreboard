@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
-import useLiveData from "../../../hooks/useLiveData";
-import useBoxscore from "../../../hooks/useBoxscore";
+// import useLiveData from "../../../hooks/useLiveData";
+// import useBoxscore from "../../../hooks/useBoxscore";
+import useSWR from "swr";
 
 // component
 import Scoreboard from "../../../components/Scoreboard/Scoreboard";
@@ -11,15 +12,20 @@ export default function LivePage() {
   const router = useRouter();
   const { gameId } = router.query;
 
-  const { data, isLoading } = useBoxscore(gameId, { refreshInterval: 5000 });
+  // const { data, isLoading } = useBoxscore(gameId, { refreshInterval: 5000 });
+
+  const { data, error, isLoading } = useSWR(`/api/boxscore/${gameId}`, {
+    refreshInterval: 5000,
+    shouldRetryOnError: false,
+  });
 
   if (isLoading) {
     return <Loading />;
   }
   // handling error response
-  if (data.status) {
-    // console.log(data, "error");
-    return <Error {...data} />;
+  if (error) {
+    console.log(error, "error");
+    return <Error {...error} />;
   }
 
   return <Scoreboard {...data.game} />;

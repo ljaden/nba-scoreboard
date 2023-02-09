@@ -39,6 +39,18 @@ export async function boxscore(gameId) {
   }
 }
 
+// * Fetch Play by Play
+export async function playbyplay(gameId) {
+  try {
+    const { data } = await axios(
+      `https://cdn.nba.com/static/json/liveData/playbyplay/playbyplay_${gameId}.json`
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 // * Fetch all teams
 export async function teams() {
   try {
