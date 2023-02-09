@@ -9,7 +9,7 @@ export async function liveData() {
 
     return data;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
@@ -22,7 +22,7 @@ export async function odds() {
 
     return data;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
@@ -35,7 +35,7 @@ export async function boxscore(gameId) {
 
     return data;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
@@ -52,7 +52,7 @@ export async function teams() {
 
     return nbaTeams;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
@@ -90,6 +90,6 @@ export async function schedule(dateParam) {
 
     return schedule;
   } catch (error) {
-    return error;
+    throw error;
   }
 }

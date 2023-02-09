@@ -7,7 +7,10 @@ import { boxscore } from "../../../helpers/api";
 export default async function handler(req, res) {
   const { gameId } = req.query;
 
-  const data = await boxscore(gameId);
-
-  res.status(200).json(data);
+  try {
+    const data = await boxscore(gameId);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 }
