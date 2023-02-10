@@ -11,43 +11,47 @@ export default function UpcomingGame({
   return (
     <Link href={`/games/upcoming/${gameId}`}>
       <li className="border border-black my-1 pr-4 pl-4 pb-4 pt-1 hover:bg-red-300 whitespace-nowrap min-w-max">
-        <div className="text-sm flex my-2">
+        <div className="text-xs flex justify-between mb-1 items-center relative">
           <span className="mx-auto">{gameStatusText}</span>
           {broadcaster && (
-            <span className="text-xs text-gray-500">
+            <span className="text-[.5rem] text-gray-500 absolute right-0">
               {broadcaster.broadcasterAbbreviation}
             </span>
           )}
         </div>
-        <div className="grid grid-flow-row sm:grid-flow-col gap-2">
-          <div className="flex gap-1 justify-center items-center">
-            <Image
-              src={`/logos/${homeTeam.teamTricode}.png`}
-              width={35}
-              height={35}
-              alt="/"
-            ></Image>
-            <div className=" grid grid-flow-row auto-rows-min">
-              <span className="hidden sm:block text-xs text-gray-500">
-                {homeTeam.wins}-{homeTeam.losses}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1 w-16">
+              <Image
+                src={`https://cdn.nba.com/logos/nba/${homeTeam.teamId}/primary/L/logo.svg`}
+                width={25}
+                height={25}
+                alt="/"
+                className="flex-none"
+              ></Image>
+              <span className="grow">{homeTeam.teamTricode}</span>
+              <span className="text-[.5rem] text-gray-500 self-start mt-1">
+                ({homeTeam.wins}-{homeTeam.losses})
               </span>
-              <span>{homeTeam.teamTricode}</span>
             </div>
+            <span className="flex-none ml-16 invisible">{homeTeam.score}</span>
           </div>
 
-          <div className="flex gap-1 justify-center items-center">
-            <Image
-              src={`/logos/${awayTeam.teamTricode}.png`}
-              width={35}
-              height={35}
-              alt="/"
-            ></Image>
-            <div className=" grid grid-flow-row auto-rows-min">
-              <span className="hidden sm:block text-xs text-gray-500">
-                {awayTeam.wins}-{awayTeam.losses}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1 w-16">
+              <Image
+                src={`https://cdn.nba.com/logos/nba/${awayTeam.teamId}/primary/L/logo.svg`}
+                width={25}
+                height={25}
+                alt="/"
+                className="flex-none"
+              ></Image>
+              <span className="grow">{awayTeam.teamTricode}</span>
+              <span className="text-[.5rem] text-gray-500 self-start mt-1">
+                ({awayTeam.wins}-{awayTeam.losses})
               </span>
-              <span>{awayTeam.teamTricode}</span>
             </div>
+            <span className="flex-none ml-16 invisible">{awayTeam.score}</span>
           </div>
         </div>
       </li>

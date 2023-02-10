@@ -33,7 +33,7 @@ export default function LivePage() {
     return <Error {...error} />;
   }
 
-  console.log(data, "dfdf");
+  // console.log(data, "dfdf");
   return <Scoreboard {...data.game} />;
 }
 

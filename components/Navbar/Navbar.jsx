@@ -12,7 +12,7 @@ export default function Navbar() {
         useGlobalDateContext();
 
     return (
-        <div className="min-w-[30%] sm:min-w-max sm:h-screen bg-[#ecf0f3] p-4 ease-in duration-500  sm:overflow-y-scroll ">
+        <div className="min-w-[30%] sm:min-w-max sm:h-screen bg-[#ecf0f3] p-4 ease-in duration-500  sm:overflow-y-scroll">
             <div className="">
                 <div className="flex justify-between items-center border-b border-gray-300 py-4">
                     <AiOutlineCaretLeft

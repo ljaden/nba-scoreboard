@@ -8,7 +8,6 @@ export default function LiveGame({
   homeTeam,
   awayTeam,
 }) {
-  // console.log(data);
   return (
     <Link href={`/games/live/${gameId}`}>
       <li className="border border-black my-1 pr-4 pl-4 pb-4 pt-1 hover:bg-red-300 whitespace-nowrap min-w-min">
@@ -22,7 +21,7 @@ export default function LiveGame({
           <div className="flex items-center justify-between ">
             <div className="flex items-center gap-2 w-16">
               <Image
-                src={`/logos/${homeTeam.teamTricode}.png`}
+                src={`https://cdn.nba.com/logos/nba/${homeTeam.teamId}/primary/L/logo.svg`}
                 width={25}
                 height={25}
                 alt="/"
@@ -30,13 +29,18 @@ export default function LiveGame({
               ></Image>
               <span className="grow">{homeTeam.teamTricode}</span>
             </div>
-            <span className="flex-none ml-16">{homeTeam.score}</span>
+            <span
+              className={`ml-16 ${homeTeam.score > awayTeam.score ? "font-bold" : ""
+                }`}
+            >
+              {homeTeam.score}
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 w-16">
               <Image
-                src={`/logos/${awayTeam.teamTricode}.png`}
+                src={`https://cdn.nba.com/logos/nba/${homeTeam.teamId}/primary/L/logo.svg`}
                 width={25}
                 height={25}
                 alt="/"
@@ -44,7 +48,12 @@ export default function LiveGame({
               ></Image>
               <span className="grow">{awayTeam.teamTricode}</span>
             </div>
-            <span className="flex-none ml-16">{awayTeam.score}</span>
+            <span
+              className={`ml-16 ${homeTeam.score < awayTeam.score ? "font-bold" : ""
+                }`}
+            >
+              {awayTeam.score}
+            </span>
           </div>
         </div>
       </li>
