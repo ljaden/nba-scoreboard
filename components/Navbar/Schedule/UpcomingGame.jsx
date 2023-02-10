@@ -6,12 +6,18 @@ export default function UpcomingGame({
   gameStatusText,
   homeTeam,
   awayTeam,
+  broadcaster,
 }) {
   return (
     <Link href={`/games/upcoming/${gameId}`}>
       <li className="border border-black my-1 pr-4 pl-4 pb-4 pt-1 hover:bg-red-300 whitespace-nowrap min-w-max">
         <div className="text-sm flex my-2">
           <span className="mx-auto">{gameStatusText}</span>
+          {broadcaster && (
+            <span className="text-xs text-gray-500">
+              {broadcaster.broadcasterAbbreviation}
+            </span>
+          )}
         </div>
         <div className="grid grid-flow-row sm:grid-flow-col gap-2">
           <div className="flex gap-1 justify-center items-center">

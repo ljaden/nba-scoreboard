@@ -4,7 +4,6 @@ import { Montserrat } from "@next/font/google";
 // context
 import { DateProvider } from "../context/dateContext";
 import { SWRConfig } from "swr";
-import axiosFetcher from "../helpers/axiosFetcher";
 
 import Layout from "../components/Layout/Layout";
 
@@ -18,7 +17,13 @@ const source = Montserrat({
 export default function App({ Component, pageProps }) {
   return (
     <DateProvider>
-      <SWRConfig value={{ dedupingInterval: 6000, axiosFetcher }}>
+      <SWRConfig
+        value={{
+          dedupingInterval: 6000,
+          revalidateOnFocus: false,
+          keepPreviousData: true,
+        }}
+      >
         <div className={`${source.variable} font-sans`}>
           <Layout>
             <Component {...pageProps} />

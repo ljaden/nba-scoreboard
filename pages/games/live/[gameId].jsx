@@ -7,6 +7,7 @@ import useSWR from "swr";
 import Scoreboard from "../../../components/Scoreboard/Scoreboard";
 import Loading from "../../../components/Loading/Loading";
 import Error from "../../../components/Error/Error";
+import axiosFetcher from "../../../helpers/axiosFetcher";
 
 export default function LivePage() {
   const router = useRouter();
@@ -14,10 +15,14 @@ export default function LivePage() {
 
   // const { data, isLoading } = useBoxscore(gameId, { refreshInterval: 5000 });
 
-  const { data, error, isLoading } = useSWR(`/api/boxscore/${gameId}`, {
-    refreshInterval: 5000,
-    shouldRetryOnError: false,
-  });
+  const { data, error, isLoading } = useSWR(
+    `/api/boxscore/${gameId}`,
+    axiosFetcher,
+    {
+      refreshInterval: 5000,
+      shouldRetryOnError: false,
+    }
+  );
 
   if (isLoading) {
     return <Loading />;
@@ -28,8 +33,8 @@ export default function LivePage() {
     return <Error {...error} />;
   }
 
+  console.log(data, "dfdf");
   return <Scoreboard {...data.game} />;
-  // return <h1>tempt</h1>;
 }
 
 // export async function getServerSideProps(context) {

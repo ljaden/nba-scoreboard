@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function LiveGame({
+  gameId,
   gameStatus,
   gameStatusText,
   homeTeam,
@@ -15,7 +16,7 @@ export default function LiveGame({
           {gameStatus === 2 && (
             <Image src={`/live.png`} width={15} height={15} alt="/"></Image>
           )}
-          <span className="ml-auto">{gameStatusText}</span>
+          <span className="ml-auto capitalize">{gameStatusText}</span>
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between ">
