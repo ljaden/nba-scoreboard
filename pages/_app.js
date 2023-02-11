@@ -9,11 +9,9 @@ import Layout from "../components/Layout/Layout";
 
 // font
 const source = Montserrat({
-  weight: ["400", "700", "800"],
   subsets: ["latin"],
   variable: "--font-mon",
 });
-
 export default function App({ Component, pageProps }) {
   return (
     <DateProvider>

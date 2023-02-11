@@ -105,3 +105,15 @@ export async function schedule(dateParam) {
     throw error;
   }
 }
+
+// * Fetch for a single game
+export async function getGame(dateParam, gameId) {
+  try {
+    const data = await schedule(dateParam);
+
+    const filterGame = data.games.filter((game) => game.gameId === gameId);
+    return filterGame[0];
+  } catch (error) {
+    throw error;
+  }
+}

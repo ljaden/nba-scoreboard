@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// component
+import TeamLogo from "../../TeamLogo/TeamLogo";
+
 export default function PastGame({
   gameId,
   gameStatusText,
@@ -16,14 +19,7 @@ export default function PastGame({
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between ">
             <div className="flex items-center gap-2 w-16">
-              <Image
-                src={`https://cdn.nba.com/logos/nba/${homeTeam.teamId}/primary/L/logo.svg`}
-                width={25}
-                height={25}
-                alt="/"
-                className="flex-none"
-              ></Image>
-
+              <TeamLogo teamId={homeTeam.teamId} width={25} height={25} />
               <span
                 className={`${homeTeam.score > awayTeam.score ? "font-bold" : ""
                   }`}
@@ -41,13 +37,7 @@ export default function PastGame({
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 w-16">
-              <Image
-                src={`https://cdn.nba.com/logos/nba/${awayTeam.teamId}/primary/L/logo.svg`}
-                width={25}
-                height={25}
-                alt="/"
-                className="flex-none"
-              ></Image>
+              <TeamLogo teamId={awayTeam.teamId} width={25} height={25} />
               <span
                 className={`${awayTeam.score > homeTeam.score ? "font-bold" : ""
                   }`}

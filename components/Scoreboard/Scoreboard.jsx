@@ -10,8 +10,9 @@ import useSWR from "swr";
 import { playbyplay } from "../../helpers/api";
 
 export default function Scoreboard({
+  arenaName,
+  gameDateTimeEst,
   gameId,
-  gameCode,
   gameStatus,
   gameStatusText,
   period,
@@ -31,24 +32,33 @@ export default function Scoreboard({
 
     getPbP(gameId);
   }, [gameId, homeTeam.score, awayTeam.score, gameStatusText]);
+
   if (gameStatus === 1) {
-    /*
-     * gameStatus code
-     * 1 - didn't start yet
-     * 2 - game in process
-     * 3 - event completed
-     */
     return (
       <div>
-        <p>GAME HASNT BEGAN YET</p>
+        <div className="w-full border border-black text-center p-2">
+          <span className="capitalize">
+            {formatDateTimeStr(gameDateTimeEst)} {gameStatusText}
+          </span>
+        </div>
+        <div className="grid sm:grid-cols-2">
+          <Team {...homeTeam} isHome={true} gameStatus={gameStatus} />
+
+          <Team {...awayTeam} gameStatus={gameStatus} />
+        </div>
+        {arenaName && (
+          <div className="w-full border border-black text-center p-2">
+            <span>Stadium: {arenaName}</span>
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <div className="">
-      <div className="w-full border border-black text-center text-2xl">
-        {gameStatusText}
+    <>
+      <div className="w-full border border-black text-center p-2">
+        <span className="">{gameStatusText}</span>
       </div>
       <div className="grid grid-2 sm:grid-cols-2">
         <Team {...homeTeam} isHome={true} />
@@ -56,11 +66,12 @@ export default function Scoreboard({
       </div>
 
       <Periods
+        homeTeamId={homeTeam.teamId}
         homeTeamPeriods={homeTeam.periods}
         homeTeamTri={homeTeam.teamTricode}
+        awayTeamId={awayTeam.teamId}
         awayTeamPeriods={awayTeam.periods}
         awayTeamTri={awayTeam.teamTricode}
-        period={period}
       />
 
       <PlayerStats
@@ -77,7 +88,7 @@ export default function Scoreboard({
           {gameClock(play.clock)} {play.description}
         </p>
       ))}
-    </div>
+    </>
   );
 }
 
@@ -87,6 +98,14 @@ export function gameClock(duration) {
     momentDuration.minutes().toString().padStart(2, "0") +
     ":" +
     momentDuration.seconds().toString().padStart(2, "0");
+
   return formattedDuration;
+}
+
+export function formatDateTimeStr(dtString) {
+  const momentDT = moment(dtString);
+  const formattedDTstr = momentDT.format("dddd, MMM D ");
+
+  return formattedDTstr;
 }
 // https://cdn.nba.com/headshots/nba/latest/260x190/203999.png

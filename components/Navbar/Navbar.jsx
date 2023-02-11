@@ -8,13 +8,13 @@ import { useGlobalDateContext } from "../../context/dateContext";
 import Schedule from "./Schedule/Schedule";
 
 export default function Navbar() {
-    const { date, dateFormatted, currentDate, currentDateFormatted, dispatch } =
+    const { date, dateFormatted, currentDateFormatted, dispatch } =
         useGlobalDateContext();
 
     return (
-        <div className="min-w-[30%] sm:min-w-max sm:h-screen bg-[#ecf0f3] p-4 ease-in duration-500  sm:overflow-y-scroll">
+        <div className="sm:min-w-max sm:h-screen bg-[#ecf0f3] p-4 ease-in duration-500  sm:overflow-y-scroll">
             <div className="">
-                <div className="flex justify-between items-center border-b border-gray-300 py-4">
+                <div className="flex gap-3 justify-between items-center border-b border-gray-300 py-4">
                     <AiOutlineCaretLeft
                         onClick={() => dispatch({ type: "previous_date" })}
                         className="cursor-pointer"
@@ -32,9 +32,8 @@ export default function Navbar() {
                         className="cursor-pointer"
                     />
                 </div>
-
-                <Schedule date={dateFormatted} />
             </div>
+            <Schedule date={dateFormatted} />
         </div>
     );
 }

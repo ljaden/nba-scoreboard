@@ -1,6 +1,7 @@
-import Image from "next/image";
-
 import { useEffect, useState } from "react";
+
+// component
+import TeamLogo from "../../TeamLogo/TeamLogo";
 
 export default function Team({
   teamId,
@@ -11,6 +12,7 @@ export default function Team({
   losses,
   score,
   isHome,
+  gameStatus,
 }) {
   // state score color transition
   const [color, setColor] = useState("text-white");
@@ -30,35 +32,28 @@ export default function Team({
   return (
     <div
       className={`min-w-full py-6 px-4 flex ${isHome ? "" : "sm:flex-row-reverse"
-        } justify-between items-center font-extrabold text-white ${teamTricode}-color`}
+        } justify-between items-center text-white ${teamTricode}-color`}
     >
       <div
         className={`flex ${isHome ? "" : "sm:flex-row-reverse"
           } gap-4 items-center`}
       >
-        <span className="w-max">
-          <Image
-            src={`/logos/${teamTricode}.png`}
-            alt="/"
-            width={50}
-            height={50}
-          ></Image>
-        </span>
+        <TeamLogo teamId={teamId} width={60} height={60} />
         <div className="flex flex-col items-center">
-          {wins ? (
-            <small>
-              {wins}-{losses}
-            </small>
-          ) : (
-            <small></small>
+          {wins && (
+            <span className="text-sm">
+              ({wins}-{losses})
+            </span>
           )}
-          <span className="text-2xl">{teamCity}</span>
-          <span className="text-2xl leading-4">{teamName}</span>
+          <span className="text-3xl font-bold">
+            {teamCity} {teamName}
+          </span>
         </div>
       </div>
       <div>
         <span
-          className={`text-4xl transition-colors duration-700 ease-in-out transform ${color}`}
+          className={`${gameStatus === 1 ? "hidden" : ""
+            } text-4xl font-extrabold transition-colors duration-700 ease-in-out transform ${color}`}
         >
           {score}
         </span>

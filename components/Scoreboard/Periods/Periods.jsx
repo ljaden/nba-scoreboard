@@ -1,17 +1,21 @@
 import Image from "next/image";
 
+// component
+import TeamLogo from "../../TeamLogo/TeamLogo";
+
 export default function Periods({
+  homeTeamId,
   homeTeamPeriods,
   homeTeamTri,
+  awayTeamId,
   awayTeamPeriods,
   awayTeamTri,
-  period,
 }) {
   return (
     <div>
       {/* periods */}
 
-      <table className="w-5/6 mx-auto mt-4 text-center">
+      <table className="w-4/6 mx-auto mt-4 text-center">
         <thead className="border-b-2 border-black">
           <tr className="my-4">
             <th></th>
@@ -27,14 +31,13 @@ export default function Periods({
         </thead>
         <tbody>
           <tr>
-            <td>
-              <Image
-                src={`/logos/${homeTeamTri}.png`}
-                alt="/"
-                width={20}
-                height={20}
-                className="m-auto w-auto h-auto "
-              ></Image>
+            <td className="text-center">
+              <TeamLogo
+                teamId={homeTeamId}
+                width={30}
+                height={30}
+                className="inline-block"
+              />
             </td>
             {homeTeamPeriods.map((period) => (
               <td key={period.period}>{period.score}</td>
@@ -49,13 +52,7 @@ export default function Periods({
 
           <tr>
             <td>
-              <Image
-                src={`/logos/${awayTeamTri}.png`}
-                alt="/"
-                width={20}
-                height={20}
-                className="m-auto w-auto h-auto "
-              ></Image>
+              <TeamLogo teamId={awayTeamId} width={30} height={30} />
             </td>
             {awayTeamPeriods.map((period) => (
               <td key={period.period}>{period.score}</td>

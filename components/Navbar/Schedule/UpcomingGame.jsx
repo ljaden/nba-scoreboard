@@ -1,5 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
+
+// context
+import { useGlobalDateContext } from "../../../context/dateContext";
+
+// component
+import TeamLogo from "../../TeamLogo/TeamLogo";
 
 export default function UpcomingGame({
   gameId,
@@ -8,8 +13,10 @@ export default function UpcomingGame({
   awayTeam,
   broadcaster,
 }) {
+  const { dateFormatted } = useGlobalDateContext();
+
   return (
-    <Link href={`/games/upcoming/${gameId}`}>
+    <Link href={`/games/upcoming/${gameId}?date=${dateFormatted}`}>
       <li className="border border-black my-1 pr-4 pl-4 pb-4 pt-1 hover:bg-red-300 whitespace-nowrap min-w-max">
         <div className="text-xs flex justify-between mb-1 items-center relative">
           <span className="mx-auto">{gameStatusText}</span>
@@ -22,13 +29,7 @@ export default function UpcomingGame({
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 w-16">
-              <Image
-                src={`https://cdn.nba.com/logos/nba/${homeTeam.teamId}/primary/L/logo.svg`}
-                width={25}
-                height={25}
-                alt="/"
-                className="flex-none"
-              ></Image>
+              <TeamLogo teamId={homeTeam.teamId} width={25} height={25} />
               <span className="grow">{homeTeam.teamTricode}</span>
               <span className="text-[.5rem] text-gray-500 self-start mt-1">
                 ({homeTeam.wins}-{homeTeam.losses})
@@ -39,13 +40,7 @@ export default function UpcomingGame({
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 w-16">
-              <Image
-                src={`https://cdn.nba.com/logos/nba/${awayTeam.teamId}/primary/L/logo.svg`}
-                width={25}
-                height={25}
-                alt="/"
-                className="flex-none"
-              ></Image>
+              <TeamLogo teamId={awayTeam.teamId} width={25} height={25} />
               <span className="grow">{awayTeam.teamTricode}</span>
               <span className="text-[.5rem] text-gray-500 self-start mt-1">
                 ({awayTeam.wins}-{awayTeam.losses})
