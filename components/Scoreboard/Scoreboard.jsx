@@ -5,9 +5,7 @@ import moment from "moment";
 import Team from "./Team/Team";
 import Periods from "./Periods/Periods";
 import PlayerStats from "./PlayerStats/PlayerStats";
-
-import useSWR from "swr";
-import { playbyplay } from "../../helpers/api";
+import PlayByPlay from "./PlayByPlay/PlayByPlay";
 
 export default function Scoreboard({
   arenaName,
@@ -20,18 +18,17 @@ export default function Scoreboard({
   awayTeam,
 }) {
   const [displayHome, setDisplayHome] = useState(true);
-  const [playByPlay, setPlayByPlay] = useState([]);
 
-  useEffect(() => {
-    async function getPbP(gameId) {
-      const res = await fetch(`/api/playbyplay/${gameId}`);
-      const data = await res.json();
-
-      setPlayByPlay(data.slice(-5).reverse());
-    }
-
-    getPbP(gameId);
-  }, [gameId, homeTeam.score, awayTeam.score, gameStatusText]);
+  // useEffect(() => {
+  //   async function getPbP(gameId) {
+  //     const res = await fetch(`/api/playbyplay/${gameId}`);
+  //     const data = await res.json();
+  //
+  //     setPlayByPlay(data.slice(-5).reverse());
+  //   }
+  //
+  //   getPbP(gameId);
+  // }, [gameId, homeTeam.score, awayTeam.score, gameStatusText]);
 
   if (gameStatus === 1) {
     return (
@@ -82,24 +79,14 @@ export default function Scoreboard({
         awayTeamName={awayTeam.teamTricode}
       />
 
-      <p>PLAYBYPLAY</p>
-      {playByPlay.map((play) => (
-        <p key={play.actionNumber}>
-          {gameClock(play.clock)} {play.description}
-        </p>
-      ))}
+      <PlayByPlay gameId={gameId} gameStatusText={gameStatusText} />
+      {/* {playByPlay.map((play) => ( */}
+      {/*   <p key={play.actionNumber}> */}
+      {/*     {gameClock(play.clock)} {play.description} */}
+      {/*   </p> */}
+      {/* ))} */}
     </>
   );
-}
-
-export function gameClock(duration) {
-  const momentDuration = moment.duration(duration);
-  const formattedDuration =
-    momentDuration.minutes().toString().padStart(2, "0") +
-    ":" +
-    momentDuration.seconds().toString().padStart(2, "0");
-
-  return formattedDuration;
 }
 
 export function formatDateTimeStr(dtString) {
