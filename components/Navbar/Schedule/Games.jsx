@@ -18,13 +18,17 @@ export default function Games({
 }) {
   const { dateFormatted, currentDateFormatted } = useGlobalDateContext();
 
-  const { data, error, isLoading } = useSWR(
-    dateFormatted === currentDateFormatted ? `/api/boxscore/${gameId}` : null,
+  const { data: status } = useSWR(`/api/liveData/${gameId}`, axiosFetcher);
+  const { data } = useSWR(
+    () => {
+      return status[0].gameStatus === 2 ? `/api/boxscore/${gameId}` : null;
+    },
     axiosFetcher,
-    { refreshInterval: 5000, shouldRetryOnError: false }
+    {
+      refreshInterval: 5000,
+      shouldRetryOnError: false,
+    }
   );
-
-  if (isLoading) return <Loading />;
 
   if (gameStatus === 3) {
     return (

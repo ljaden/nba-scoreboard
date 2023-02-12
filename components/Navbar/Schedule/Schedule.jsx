@@ -1,11 +1,18 @@
-import useSchedule from "../../../hooks/useSchedule";
+// import useSchedule from "../../../hooks/useSchedule";
+
+import useSWRImmutable from "swr/immutable";
+import axiosFetcher from "../../../helpers/axiosFetcher";
 
 // components
 import Loading from "../../Loading/Loading";
 import Games from "./Games";
 
 export default function Schedule({ date }) {
-  const { data, error, isLoading } = useSchedule(date);
+  // const { data, error, isLoading } = useSchedule(date);
+  const { data, error, isLoading } = useSWRImmutable(
+    `/api/schedule/${date}`,
+    axiosFetcher
+  );
 
   if (isLoading) {
     return <Loading />;

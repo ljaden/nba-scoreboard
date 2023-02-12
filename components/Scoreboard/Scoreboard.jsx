@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import moment from "moment";
 
 //component
@@ -18,17 +18,6 @@ export default function Scoreboard({
   awayTeam,
 }) {
   const [displayHome, setDisplayHome] = useState(true);
-
-  // useEffect(() => {
-  //   async function getPbP(gameId) {
-  //     const res = await fetch(`/api/playbyplay/${gameId}`);
-  //     const data = await res.json();
-  //
-  //     setPlayByPlay(data.slice(-5).reverse());
-  //   }
-  //
-  //   getPbP(gameId);
-  // }, [gameId, homeTeam.score, awayTeam.score, gameStatusText]);
 
   if (gameStatus === 1) {
     return (
@@ -79,12 +68,9 @@ export default function Scoreboard({
         awayTeamName={awayTeam.teamTricode}
       />
 
-      <PlayByPlay gameId={gameId} gameStatusText={gameStatusText} />
-      {/* {playByPlay.map((play) => ( */}
-      {/*   <p key={play.actionNumber}> */}
-      {/*     {gameClock(play.clock)} {play.description} */}
-      {/*   </p> */}
-      {/* ))} */}
+      {gameStatus === 2 && (
+        <PlayByPlay gameId={gameId} gameStatusText={gameStatusText} />
+      )}
     </>
   );
 }

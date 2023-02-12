@@ -6,10 +6,10 @@ import moment from "moment";
 const DateContext = createContext();
 
 const initialState = {
-  date: moment().format("ddd MMM D"),
-  dateFormatted: moment().format("YYYYMMDD"),
-  currentDate: moment().format("ddd MMM D"),
-  currentDateFormatted: moment().format("YYYYMMDD"),
+  date: moment().utcOffset(-8).format("ddd MMM D"),
+  dateFormatted: moment().utcOffset(-8).format("YYYYMMDD"),
+  currentDate: moment().utcOffset(-8).format("ddd MMM D"),
+  currentDateFormatted: moment().utcOffset(-8).format("YYYYMMDD"),
 };
 
 function DateProvider({ children }) {

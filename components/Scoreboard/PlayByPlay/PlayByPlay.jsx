@@ -5,8 +5,6 @@ import axiosFetcher from "../../../helpers/axiosFetcher";
 
 import moment from "moment";
 
-import { playbyplay } from "../../../helpers/api";
-
 export default function PlayByPlay({ gameId, gameStatusText }) {
   const [autoRefresh, setAutoRefresh] = useState(true);
 
@@ -18,15 +16,16 @@ export default function PlayByPlay({ gameId, gameStatusText }) {
   const [pbp, setPbp] = useState([]);
 
   useEffect(() => {
-    setPbp(data.slice(-5).reverse() ?? data);
-  }, [gameId, data]);
+    setPbp(data?.slice(-15).reverse());
+  }, [data, autoRefresh]);
 
   return (
     <div className="mt-4">
       <div className="flex gap-2">
         <p className="text-2xl font-bold">PLAY BY PLAY</p>
         <button
-          className="border border-black rounded-full p-2"
+          className={`border border-black rounded-full p-2 ${autoRefresh ? "bg-green-500" : ""
+            }`}
           onClick={() => setAutoRefresh((pre) => !pre)}
         >
           AutoRefresh
@@ -34,15 +33,14 @@ export default function PlayByPlay({ gameId, gameStatusText }) {
         <span>{autoRefresh ? "on" : "off"}</span>
       </div>
 
-      {pbp.map((play) => (
-        <div key={play.actionNumber} className="my-2">
-          <span className="">
-            {gameClock(play.clock)}
-            {"   "}
-            {play.description}
-          </span>
-        </div>
-      ))}
+      {pbp &&
+        pbp.map((play) => (
+          <div key={play.actionNumber} className="my-2">
+            <span className="">
+              {gameClock(play.clock)} {play.description}
+            </span>
+          </div>
+        ))}
     </div>
   );
 }
