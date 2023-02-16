@@ -5,9 +5,6 @@ import { Montserrat } from "@next/font/google";
 import { DateProvider } from "../context/dateContext";
 import { SWRConfig } from "swr";
 
-import Layout from "../components/Layout/Layout";
-import Navbar from "../components/Navbar/Navbar";
-
 // font
 const source = Montserrat({
   subsets: ["latin"],

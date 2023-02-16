@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { getGame } from "../../helpers/api";
 
 import Layout from "../../components/Layout/Layout";
@@ -11,9 +9,8 @@ export default function GamesPage({ data }) {
   return <div>{<Scoreboard {...data.game} />}</div>;
 }
 
-export async function getServerSideProps(context) {
-  const { gameId, date } = context.query;
-  // console.log(context.query, "query");
+export async function getServerSideProps({ query }) {
+  const { gameId, date } = query;
 
   const res = await fetch(
     `https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${gameId}.json`
