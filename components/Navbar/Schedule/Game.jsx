@@ -1,20 +1,29 @@
-import Image from "next/image";
 import Link from "next/link";
+import { useGlobalDateContext } from "../../../context/dateContext";
 
 // component
 import TeamLogo from "../../TeamLogo/TeamLogo";
 
-export default function PastGame({
+export default function Game({
   gameId,
+  gameStatus,
   gameStatusText,
   homeTeam,
   awayTeam,
+  broadcaster,
 }) {
+  const { dateFormatted } = useGlobalDateContext();
+
   return (
-    <Link href={`/games/${gameId}`}>
+    <Link href={`/games/${gameId}?date=${dateFormatted}`}>
       <li className="border border-black my-1 pr-4 pl-4 pb-4 pt-1 hover:bg-red-300 whitespace-nowrap min-w-max">
-        <div className="text-xs flex">
-          <span className="ml-auto text-gray-500">{gameStatusText}</span>
+        <div className="text-xs flex justify-between mb-1 items-center relative">
+          <span className="mx-auto">{gameStatusText}</span>
+          {broadcaster && (
+            <span className="text-gray-500 absolute right-0 hidden md:block">
+              {broadcaster.broadcasterAbbreviation}
+            </span>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between ">
@@ -29,7 +38,7 @@ export default function PastGame({
             </div>
             <span
               className={`flex-none ml-16 ${homeTeam.score > awayTeam.score ? "font-bold" : ""
-                }`}
+                } ${gameStatus === 1 ? "invisible" : ""}`}
             >
               {homeTeam.score}
             </span>
@@ -47,7 +56,7 @@ export default function PastGame({
             </div>
             <span
               className={`flex-none ml-16 ${awayTeam.score > homeTeam.score ? "font-bold" : ""
-                }`}
+                } ${gameStatus === 1 ? "invisible" : ""}`}
             >
               {awayTeam.score}
             </span>

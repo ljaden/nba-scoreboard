@@ -14,6 +14,7 @@ export default function Team({
   isHome,
   gameStatus,
 }) {
+  // console.log(gameStatus, "team.jsx");
   // state score color transition
   const [color, setColor] = useState("text-white");
 
@@ -36,28 +37,26 @@ export default function Team({
     >
       <div
         className={`flex ${isHome ? "" : "sm:flex-row-reverse"
-          } gap-4 items-center`}
+          } gap-4 items-center justify-evenly`}
       >
         <TeamLogo teamId={teamId} width={60} height={60} />
+
         <div className="flex flex-col items-center">
           {wins && (
             <span className="text-sm">
               ({wins}-{losses})
             </span>
           )}
-          <span className="text-3xl font-bold">
-            {teamCity} {teamName}
-          </span>
+          <span className="text-3xl font-bold text-center">{teamCity}</span>
+          <span className="text-3xl font-bold text-center">{teamName}</span>
         </div>
       </div>
-      <div>
-        <span
-          className={`${gameStatus === 1 ? "hidden" : ""
-            } text-4xl font-extrabold transition-colors duration-700 ease-in-out transform ${color}`}
-        >
-          {score}
-        </span>
-      </div>
+      <span
+        className={`${gameStatus === 1 ? "hidden" : ""
+          } text-4xl font-extrabold transition-colors duration-700 ease-in-out transform ${color}`}
+      >
+        {score}
+      </span>
     </div>
   );
 }

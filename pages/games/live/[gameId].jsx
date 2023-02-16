@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 
 // component
+import Layout from "../../../components/Layout/Layout";
 import Scoreboard from "../../../components/Scoreboard/Scoreboard";
 import Loading from "../../../components/Loading/Loading";
 import Error from "../../../components/Error/Error";
@@ -25,10 +26,14 @@ export default function LivePage() {
   }
   // handling error response
   if (error) {
-    console.log(error, "error");
+    // console.log(error, "error");
     return <Error {...error} />;
   }
 
   // console.log(data, "dfdf");
   return <Scoreboard {...data.game} />;
 }
+
+LivePage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};

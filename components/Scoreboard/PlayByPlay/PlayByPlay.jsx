@@ -1,42 +1,48 @@
 import { useState, useEffect } from "react";
 
+import { FaPlay, FaPause } from "react-icons/fa";
+
 import useSWR from "swr";
 import axiosFetcher from "../../../helpers/axiosFetcher";
 
 import moment from "moment";
 
+import TeamLogo from "../../TeamLogo/TeamLogo";
+
 export default function PlayByPlay({ gameId, gameStatusText }) {
-  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(false);
 
   const { data, error, isLoading } = useSWR(
     autoRefresh ? `/api/playbyplay/${gameId}` : null,
     axiosFetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: gameStatusText === "Half" ? null : 5000 }
   );
   const [pbp, setPbp] = useState([]);
 
   useEffect(() => {
-    setPbp(data?.slice(-15).reverse());
+    setPbp(data?.slice(-5).reverse());
   }, [data, autoRefresh]);
 
   return (
-    <div className="mt-4">
-      <div className="flex gap-2">
-        <p className="text-2xl font-bold">PLAY BY PLAY</p>
+    <div className="">
+      <div className="flex gap-2 justify-center items-center">
+        <span className="text-2xl font-bold">PLAY BY PLAY</span>
         <button
-          className={`border border-black rounded-full p-2 ${autoRefresh ? "bg-green-500" : ""
-            }`}
+          className={`${""}`}
           onClick={() => setAutoRefresh((pre) => !pre)}
         >
-          AutoRefresh
+          {autoRefresh ? <FaPlay /> : <FaPause />}
         </button>
         <span>{autoRefresh ? "on" : "off"}</span>
       </div>
 
       {pbp &&
         pbp.map((play) => (
-          <div key={play.actionNumber} className="my-2">
-            <span className="">
+          <div key={play.actionNumber} className="flex my-2">
+            {<TeamLogo teamId={play.teamId} width={25} height={25} />}
+            <span
+              className={`${play?.shotResult === "Made" ? "font-bold" : ""}`}
+            >
               {gameClock(play.clock)} {play.description}
             </span>
           </div>

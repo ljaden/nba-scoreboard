@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  line-height: 1;
-}
-
 body {
   background-color: rgb(220, 225, 227);
 }

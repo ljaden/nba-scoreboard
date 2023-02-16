@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 // component
 import TeamLogo from "../../TeamLogo/TeamLogo";
 
@@ -11,6 +9,12 @@ export default function Periods({
   awayTeamPeriods,
   awayTeamTri,
 }) {
+  const homeScore = homeTeamPeriods.reduce((total, period) => {
+    return total + period.score;
+  }, 0);
+  const awayScore = awayTeamPeriods.reduce((total, period) => {
+    return total + period.score;
+  }, 0);
   return (
     <div>
       {/* periods */}
@@ -29,7 +33,7 @@ export default function Periods({
             <th>T</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-lg">
           <tr>
             <td className="text-center">
               <TeamLogo
@@ -39,14 +43,20 @@ export default function Periods({
                 className="inline-block"
               />
             </td>
-            {homeTeamPeriods.map((period) => (
-              <td key={period.period}>{period.score}</td>
+            {homeTeamPeriods.map((period, i) => (
+              <td
+                key={period.period}
+                className={`${period.score > awayTeamPeriods[i].score
+                    ? "font-extrabold"
+                    : ""
+                  }`}
+              >
+                {period.score > 0 ? period.score : "-"}
+              </td>
             ))}
             {/* homeTeamTotal */}
-            <td>
-              {homeTeamPeriods.reduce((total, period) => {
-                return total + period.score;
-              }, 0)}
+            <td className={`${homeScore > awayScore ? "font-extrabold" : ""}`}>
+              {homeScore}
             </td>
           </tr>
 
@@ -54,14 +64,20 @@ export default function Periods({
             <td>
               <TeamLogo teamId={awayTeamId} width={30} height={30} />
             </td>
-            {awayTeamPeriods.map((period) => (
-              <td key={period.period}>{period.score}</td>
+            {awayTeamPeriods.map((period, i) => (
+              <td
+                key={period.period}
+                className={`${period.score > homeTeamPeriods[i].score
+                    ? "font-extrabold"
+                    : ""
+                  }`}
+              >
+                {period.score > 0 ? period.score : "-"}
+              </td>
             ))}
             {/* awayTeamTotal */}
-            <td>
-              {awayTeamPeriods.reduce((total, period) => {
-                return total + period.score;
-              }, 0)}
+            <td className={`${awayScore > homeScore ? "font-extrabold" : ""}`}>
+              {awayScore}
             </td>
           </tr>
         </tbody>

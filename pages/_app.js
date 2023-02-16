@@ -6,6 +6,7 @@ import { DateProvider } from "../context/dateContext";
 import { SWRConfig } from "swr";
 
 import Layout from "../components/Layout/Layout";
+import Navbar from "../components/Navbar/Navbar";
 
 // font
 const source = Montserrat({
@@ -13,6 +14,7 @@ const source = Montserrat({
   variable: "--font-mon",
 });
 export default function App({ Component, pageProps }) {
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <DateProvider>
       <SWRConfig
@@ -23,9 +25,7 @@ export default function App({ Component, pageProps }) {
         }}
       >
         <div className={`${source.variable} font-sans`}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          {getLayout(<Component {...pageProps} />)}
         </div>
       </SWRConfig>
     </DateProvider>

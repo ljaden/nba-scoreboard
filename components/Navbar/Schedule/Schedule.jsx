@@ -8,7 +8,6 @@ import Loading from "../../Loading/Loading";
 import Games from "./Games";
 
 export default function Schedule({ date }) {
-  // const { data, error, isLoading } = useSchedule(date);
   const { data, error, isLoading } = useSWRImmutable(
     `/api/schedule/${date}`,
     axiosFetcher
@@ -24,7 +23,7 @@ export default function Schedule({ date }) {
 
   return (
     <div className="pt-8">
-      <ul className="flex sm:flex-col gap-2 overflow-auto">
+      <ul className="flex md:flex-col gap-2 overflow-auto">
         {data ? (
           data.games.map((game) => {
             return <Games key={game.gameId} {...game} />;

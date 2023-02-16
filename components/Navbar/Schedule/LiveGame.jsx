@@ -12,6 +12,7 @@ export default function LiveGame({
   awayTeam,
 }) {
   return (
+    // <Link href={`/games/live/${gameId}`}>
     <Link href={`/games/live/${gameId}`}>
       <li className="border border-black my-1 pr-4 pl-4 pb-4 pt-1 hover:bg-red-300 whitespace-nowrap min-w-min">
         <div className="text-xs flex justify-between">

@@ -1,12 +1,10 @@
-import { useGlobalDateContext } from "../../../context/dateContext";
-
 import useSWR from "swr";
 import axiosFetcher from "../../../helpers/axiosFetcher";
 
-import UpcomingGame from "./UpcomingGame";
 import LiveGame from "./LiveGame";
-import PastGame from "./PastGame";
+import Game from "./Game";
 import Loading from "../../Loading/Loading";
+import Error from "../../Error/Error";
 
 export default function Games({
   gameId,
@@ -16,10 +14,8 @@ export default function Games({
   awayTeam,
   broadcasters,
 }) {
-  const { dateFormatted, currentDateFormatted } = useGlobalDateContext();
-
   const { data: status } = useSWR(`/api/liveData/${gameId}`, axiosFetcher);
-  const { data } = useSWR(
+  const { data, error, isLoading } = useSWR(
     () => {
       return status[0].gameStatus === 2 ? `/api/boxscore/${gameId}` : null;
     },
@@ -30,30 +26,27 @@ export default function Games({
     }
   );
 
-  if (gameStatus === 3) {
-    return (
-      <PastGame
-        gameId={gameId}
-        gameStatusText={gameStatusText}
-        homeTeam={homeTeam}
-        awayTeam={awayTeam}
-      />
-    );
+  if (isLoading) {
+    return <Loading />;
   }
 
-  return (
-    <>
-      {data ? (
-        <LiveGame {...data.game} />
-      ) : (
-        <UpcomingGame
+  if (status && status[0]?.gameStatus !== 2) {
+    // if (status[0].gameStatus === 2) {
+    console.log(status[0]);
+    // }
+    return (
+      (
+        <Game
           gameId={gameId}
+          gameStatus={gameStatus}
           gameStatusText={gameStatusText}
           homeTeam={homeTeam}
           awayTeam={awayTeam}
           broadcaster={broadcasters.nationalTvBroadcasters[0]}
         />
-      )}
-    </>
-  );
+      ) || <Loading />
+    );
+  }
+
+  return <>{data && <LiveGame {...data.game} />}</>;
 }

@@ -1,64 +1,43 @@
-import { useRouter } from "next/router";
+import { useState } from "react";
+
+import { getGame } from "../../helpers/api";
+
+import Layout from "../../components/Layout/Layout";
 
 // component
 import Scoreboard from "../../components/Scoreboard/Scoreboard";
-import Loading from "../../components/Loading/Loading";
-import Error from "../../components/Error/Error";
 
-export default function LivePage({ data, error }) {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <Loading />;
-  }
-
-  if (error) {
-    console.log(error);
-    return <Error message={error} />;
-  }
-
-  // console.log(data, "info");
-  return <div>{data && <Scoreboard {...data.game} />}</div>;
+export default function GamesPage({ data }) {
+  return <div>{<Scoreboard {...data.game} />}</div>;
 }
 
-export async function getStaticPaths() {
+export async function getServerSideProps(context) {
+  const { gameId, date } = context.query;
+  // console.log(context.query, "query");
+
   const res = await fetch(
-    "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json"
+    `https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${gameId}.json`
   );
-  const data = await res.json();
 
-  const paths = data.leagueSchedule.gameDates
-    .map((date) =>
-      date.games.filter(
-        (game) =>
-          game.gameStatus === 3 &&
-          game.gameId !== "0012200069" &&
-          game.gameId !== "0012200070"
-      )
-    )
-    .flat()
-    .map((game) => ({
-      params: {
-        gameId: game.gameId,
-      },
-    }));
+  // res !== 200, get data from schedule api
+  if (!res.ok) {
+    const res = await getGame(date, gameId);
+    if (!res) {
+      console.log("not res");
+      return { notFound: true };
+    }
+    const data = { game: res };
 
-  return { paths, fallback: true };
-}
-
-export async function getStaticProps(context) {
-  const { gameId } = context.params;
-  // Fetch data from API
-  try {
-    const res = await fetch(
-      `https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${gameId}.json`
-    );
-    const data = await res.json();
-
-    return { props: { data } };
-  } catch (error) {
     return {
-      props: { error: `No data found for gameID_${gameId}` },
+      props: { data },
     };
   }
+
+  const data = await res.json();
+
+  return { props: { data } };
 }
+
+GamesPage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
