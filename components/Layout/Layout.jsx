@@ -4,7 +4,9 @@ export default function Layout({ children }) {
   return (
     <div className="flex flex-col md:flex-row">
       <Navbar />
-      <main className="w-full md:w-[80%] p-4">{children}</main>
+      <div className="w-full md:w-[80%] p-4">
+        <main className="">{children}</main>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,9 @@
-import useSWR from "swr";
+import { useQuery } from "@tanstack/react-query";
 import axiosFetcher from "../../../helpers/axiosFetcher";
 
 import LiveGame from "./LiveGame";
 import Game from "./Game";
 import Loading from "../../Loading/Loading";
-import Error from "../../Error/Error";
 
 export default function Games({
   gameId,
@@ -14,26 +13,24 @@ export default function Games({
   awayTeam,
   broadcasters,
 }) {
-  const { data: status } = useSWR(`/api/liveData/${gameId}`, axiosFetcher);
-  const { data, error, isLoading } = useSWR(
-    () => {
-      return status[0].gameStatus === 2 ? `/api/boxscore/${gameId}` : null;
+  const { data: status } = useQuery({
+    queryKey: ["gameStatus", gameId],
+    queryFn: async () => {
+      const status = await axiosFetcher(`/api/liveData/${gameId}`);
+      return status[0];
     },
-    axiosFetcher,
-    {
-      refreshInterval: 5000,
-      shouldRetryOnError: false,
-    }
-  );
+  });
+  const liveStatus = status?.gameStatus === 2;
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const { data, isLoading } = useQuery({
+    queryKey: ["liveData", gameId],
+    queryFn: () => axiosFetcher(`/api/boxscore/${gameId}`),
+    refetchInterval: 10000,
+    enabled: !!liveStatus,
+    retry: false,
+  });
 
-  if (status && status[0]?.gameStatus !== 2) {
-    // if (status[0].gameStatus === 2) {
-    console.log(status[0]);
-    // }
+  if (!liveStatus) {
     return (
       (
         <Game
@@ -48,5 +45,5 @@ export default function Games({
     );
   }
 
-  return <>{data && <LiveGame {...data.game} />}</>;
+  return <>{data && (<LiveGame {...data.game} /> || <Loading />)}</>;
 }

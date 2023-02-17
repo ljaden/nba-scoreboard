@@ -18,6 +18,7 @@ export default function Home() {
     <div className="flex items-center justify-center align-middle mt-[45%]">
       <Image
         src={`/logos/ball.png`}
+        alt="loading"
         width={100}
         height={100}
         className="animate-bounce"

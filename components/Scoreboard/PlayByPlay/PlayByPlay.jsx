@@ -2,21 +2,31 @@ import { useState, useEffect } from "react";
 
 import { FaPlay, FaPause } from "react-icons/fa";
 
-import useSWR from "swr";
-import axiosFetcher from "../../../helpers/axiosFetcher";
+// import useSWR from "swr";
+// import axiosFetcher from "../../../helpers/axiosFetcher";
 
 import moment from "moment";
 
 import TeamLogo from "../../TeamLogo/TeamLogo";
+import { useQuery } from "@tanstack/react-query";
+import axiosFetcher from "../../../helpers/axiosFetcher";
 
 export default function PlayByPlay({ gameId, gameStatusText }) {
   const [autoRefresh, setAutoRefresh] = useState(false);
 
-  const { data, error, isLoading } = useSWR(
-    autoRefresh ? `/api/playbyplay/${gameId}` : null,
-    axiosFetcher,
-    { refreshInterval: gameStatusText === "Half" ? null : 5000 }
-  );
+  // const { data, error, isLoading } = useSWR(
+  //   autoRefresh ? `/api/playbyplay/${gameId}` : null,
+  //   axiosFetcher,
+  //   { refreshInterval: gameStatusText === "Half" ? null : 5000 }
+  // );
+  //
+
+  const { data } = useQuery({
+    queryKey: ["playbyplay", gameId, autoRefresh],
+    queryFn: () => axiosFetcher(`/api/playbyplay/${gameId}`),
+    refetchInterval: 5000,
+    enabled: autoRefresh,
+  });
   const [pbp, setPbp] = useState([]);
 
   useEffect(() => {

@@ -1,6 +1,4 @@
-// import useSchedule from "../../../hooks/useSchedule";
-
-import useSWRImmutable from "swr/immutable";
+import { useQuery } from "@tanstack/react-query";
 import axiosFetcher from "../../../helpers/axiosFetcher";
 
 // components
@@ -8,17 +6,18 @@ import Loading from "../../Loading/Loading";
 import Games from "./Games";
 
 export default function Schedule({ date }) {
-  const { data, error, isLoading } = useSWRImmutable(
-    `/api/schedule/${date}`,
-    axiosFetcher
-  );
+  // fetch game schedule dependent of date prop
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["schedule", date],
+    queryFn: () => axiosFetcher(`/api/schedule/${date}`),
+  });
 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (error) {
-    return <p>{error.message}</p>;
+  if (isError) {
+    return <p>isError</p>;
   }
 
   return (

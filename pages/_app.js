@@ -3,7 +3,10 @@ import { Montserrat } from "@next/font/google";
 
 // context
 import { DateProvider } from "../context/dateContext";
-import { SWRConfig } from "swr";
+
+//
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // font
 const source = Montserrat({
@@ -12,19 +15,24 @@ const source = Montserrat({
 });
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  });
+
   return (
     <DateProvider>
-      <SWRConfig
-        value={{
-          dedupingInterval: 6000,
-          revalidateOnFocus: false,
-          keepPreviousData: true,
-        }}
-      >
+      <QueryClientProvider client={queryClient}>
         <div className={`${source.variable} font-sans`}>
           {getLayout(<Component {...pageProps} />)}
         </div>
-      </SWRConfig>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </QueryClientProvider>
     </DateProvider>
   );
 }
