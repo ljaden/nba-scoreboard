@@ -23,7 +23,7 @@ export default function LivePage() {
   const { data, isLoading } = useQuery({
     queryKey: ["liveData", gameId],
     queryFn: () => axiosFetcher(`/api/boxscore/${gameId}`),
-    refetchInterval: 10000,
+    refetchInterval: 5000,
   });
 
   if (isLoading) {

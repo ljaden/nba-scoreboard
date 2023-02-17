@@ -13,37 +13,28 @@ export default function Games({
   awayTeam,
   broadcasters,
 }) {
-  const { data: status } = useQuery({
-    queryKey: ["gameStatus", gameId],
-    queryFn: async () => {
-      const status = await axiosFetcher(`/api/liveData/${gameId}`);
-      return status[0];
-    },
-  });
-  const liveStatus = status?.gameStatus === 2;
-
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["liveData", gameId],
     queryFn: () => axiosFetcher(`/api/boxscore/${gameId}`),
-    refetchInterval: 10000,
-    enabled: !!liveStatus,
+    refetchInterval: (data) =>
+      !data || (data.gameStatus === 2 ? 5000 : undefined),
     retry: false,
   });
+  return data ? (
+    <LiveGame {...data.game} />
+  ) : (
+    <Game
+      gameId={gameId}
+      gameStatus={gameStatus}
+      gameStatusText={gameStatusText}
+      homeTeam={homeTeam}
+      awayTeam={awayTeam}
+      broadcaster={broadcasters.nationalTvBroadcasters[0]}
+    />
+  );
+  // ) || <Loading />
+  // );
+  // }
 
-  if (!liveStatus) {
-    return (
-      (
-        <Game
-          gameId={gameId}
-          gameStatus={gameStatus}
-          gameStatusText={gameStatusText}
-          homeTeam={homeTeam}
-          awayTeam={awayTeam}
-          broadcaster={broadcasters.nationalTvBroadcasters[0]}
-        />
-      ) || <Loading />
-    );
-  }
-
-  return <>{data && (<LiveGame {...data.game} /> || <Loading />)}</>;
+  // return <>{data && (<LiveGame {...data.game} /> || <Loading />)}</>;
 }
